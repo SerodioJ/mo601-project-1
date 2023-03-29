@@ -12,7 +12,7 @@ class Simulation:
         self.delay = delay
         self.inputs = self._get_circuit_inputs()
         self.file = open(os.path.join(output_folder, f"saida{delay}.csv"), "w")
-        self.csv_writer = csv.writer(self.file)
+        self.csv_writer = csv.writer(self.file, lineterminator="\n")
 
     def run(self):
         self.csv_writer.writerow(["Tempo"] + sorted(self.circuit.keys()))
@@ -38,6 +38,8 @@ class Simulation:
             self._run_cycle_delay_0(cycle_inputs)
 
     def _run_cycle_delay_0(self, cycle_inputs):
+        if cycle_inputs == {}: # nothing to be updated
+            return
         for sig_in, sig_val in cycle_inputs.items():
             self.circuit[sig_in].value = sig_val
             self.circuit[sig_in].prev_value = sig_val

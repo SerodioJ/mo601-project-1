@@ -1,5 +1,5 @@
 import argparse
-import filecmp
+import os
 from copy import deepcopy
 from glob import glob
 from pathlib import Path
@@ -12,11 +12,10 @@ from simulation.simulate import Simulation
 def run_simulations(args):
     folders = args.folders
     if args.folders == None:
-        folders = glob("../test/*")
-
+        folders = glob(args.path)
     for folder in tqdm(folders):
-        circuit = CircuitParser(f"{folder}/circuito.hdl").parse()
-        stimulus = StimulusParser(f"{folder}/estimulos.txt").parse()
+        circuit = CircuitParser(os.path.join(folder, "circuito.hdl")).parse()
+        stimulus = StimulusParser(os.path.join(folder, "estimulos.txt")).parse()
 
         simulation_0 = Simulation(
             deepcopy(circuit), deepcopy(stimulus), folder, delay=0
@@ -37,6 +36,14 @@ if __name__ == "__main__":
         help="path to test folder to use, if not set will run with all folders at ../test/",
         type=Path,
         nargs="+",
+    )
+
+    parser.add_argument(
+        "-p",
+        "--path",
+        help="path for test folder",
+        type=str,
+        default="../test/*"
     )
 
     args = parser.parse_args()

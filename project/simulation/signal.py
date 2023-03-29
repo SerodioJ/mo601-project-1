@@ -16,7 +16,11 @@ class Signal:
         if value is not None:
             self.value = value
             return
-        if self.gate == None or self.parents[0].prev_value == None:
+        if (
+            self.gate == None
+            or self.parents[0].prev_value == None
+            or (len(self.parents) == 2 and self.parents[1].prev_value == None)
+        ):
             return
 
         operation = {
