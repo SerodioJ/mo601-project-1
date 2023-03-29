@@ -49,12 +49,12 @@ class Simulation:
             self.circuit[sig_in].value = sig_val
             self.circuit[sig_in].prev_value = sig_val
         for i in range(10000):
+            self._update_state()
             for _, sig_obj in self.circuit.items():
                 sig_obj.update()
 
             if self._stabilized():
                 return
-            self._update_state()
         raise CircuitDidNotStabilized()
 
     def _run_cycle_delay_1(self, cycle_inputs):
