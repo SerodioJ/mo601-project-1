@@ -1,0 +1,5 @@
+C = XOR A B
+D = AND A B
+E = AND I C
+R = XOR I C
+O = OR D E

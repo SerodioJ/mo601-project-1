@@ -1,0 +1,2 @@
+P = NOR S Q
+Q = NOR R P

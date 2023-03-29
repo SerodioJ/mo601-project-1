@@ -1,0 +1,9 @@
+Q = OR X Z
+P = OR Y W 
+X = NOT S
+Y = NOT R
+W = NOT Q
+Z = NOT P
+R = NAND N E
+S = NAND D E
+N = NOT D
