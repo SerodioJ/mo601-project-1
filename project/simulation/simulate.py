@@ -45,8 +45,6 @@ class Simulation:
             self._run_cycle_delay_0(cycle_inputs)
 
     def _run_cycle_delay_0(self, cycle_inputs):
-        if cycle_inputs == {}: # nothing to be updated
-            return
         for sig_in, sig_val in cycle_inputs.items():
             self.circuit[sig_in].value = sig_val
             self.circuit[sig_in].prev_value = sig_val
