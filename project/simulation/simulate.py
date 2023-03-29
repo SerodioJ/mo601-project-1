@@ -21,8 +21,15 @@ class Simulation:
             self._run_cycle()
             line = self._circuit_snapshot()
             self.csv_writer.writerow([self.cycle] + line)
-            if prev_line == line and self.stimulus == {}:
-                break
+            if prev_line == line: # circuit is stable
+                if self.stimulus == {}: # finish simulation
+                    break
+                else: # print same circuit state until next event (signal change) occurs
+                    next_change = sorted(self.stimulus.keys())[0]
+                    for stable_cycle in range(self.cycle + 1, next_change):
+                        self.csv_writer.writerow([stable_cycle] + line)
+                    self.cycle = next_change
+                    continue
             self.cycle += 1
             self._update_state()
             prev_line = line
